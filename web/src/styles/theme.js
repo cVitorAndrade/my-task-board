@@ -6,7 +6,7 @@ export default {
         BLUE_DARK: "#3662E3",
         BLUE_LIGHT: "#E3E8EF",
 
-        BLACK: "#00000033",
+        BLACK: "#000033",
 
         YELLOW_DARK: "#E9A23B",
         YELLOW_LIGHT: "#F5D565",

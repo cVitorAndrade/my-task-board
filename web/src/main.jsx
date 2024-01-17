@@ -6,10 +6,13 @@ import theme from './styles/theme'
 
 import GlobalStyle from './styles/global'
 
+import { Board } from './pages/Board'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <Board />
     </ThemeProvider>
   </React.StrictMode>,
 )
