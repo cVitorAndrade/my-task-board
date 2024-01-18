@@ -30,9 +30,10 @@ class BoardController {
 
         await knex("tasks").insert(defaultTasks);
 
-        response.json({
+        return response.json({
             status: "sucess",
-            message: "board created successfully"
+            message: "board created successfully",
+            board_id
         })
     }
 }
