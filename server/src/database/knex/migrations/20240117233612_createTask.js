@@ -7,6 +7,7 @@ exports.up = knex => knex.schema.createTable("tasks", table => {
     table.text("description");
     table.text("title");
     table.text("icon_name");
+    table.text("status");
     table.integer("board_id").references("id").inTable("boards");
 });
 
