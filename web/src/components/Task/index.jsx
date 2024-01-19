@@ -4,7 +4,7 @@ import inProgress from "../../assets/Time_atack_duotone.svg"
 import completed from "../../assets/Done_round_duotone.svg"
 import notDo from "../../assets/close_ring_duotone.svg"
 
-export function Task ({ title, description, status, icon_name}) {
+export function Task ({ title, description, status, icon_name, ...rest }) {
     const allIcons = {
         "cup": "☕",
         "clock": "⏰",
@@ -32,7 +32,10 @@ export function Task ({ title, description, status, icon_name}) {
     };
 
     return(
-        <Container className={ status ? allStatus[status].className : "" }>
+        <Container
+            {...rest}
+            className={ status ? allStatus[status].className : "" }
+        >
             <div>
                 <div className="icon">
                     { allIcons[icon_name] }
