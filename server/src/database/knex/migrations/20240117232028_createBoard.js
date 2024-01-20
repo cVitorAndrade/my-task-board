@@ -4,6 +4,8 @@
  */
 exports.up = knex => knex.schema.createTable("boards", table => {
     table.increments("id");
+    table.text("description").defaultTo("Tasks to keep organised");
+    table.text("title").defaultTo("My Task Board")
 })
 
 /**
