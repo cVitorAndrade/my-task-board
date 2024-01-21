@@ -125,7 +125,7 @@ export function Board () {
         setSelectedTaskTitle(title);
         setSelectedTaskStatus(status)
         setSelectedTaskIcon(icon_name);
-        setSelectedTaskDescription(description)
+        setSelectedTaskDescription(description);
 
         setModalIsOpen(true);
     }
@@ -136,6 +136,21 @@ export function Board () {
             setModalIsOpen(false);
             getTasks();
 
+        })
+        .catch( error => console.log(error));
+    }
+
+    function handleUpdateTask () {
+        console.log(selectedTaskId);
+        api.put(`/task/${selectedTaskId}`, {
+            title: selectedTaskTitle,
+            description: selectedTaskDescription,
+            icon_name: selectedTaskIcon,
+            status: selectedTaskStatus
+        })
+        .then(() => {
+            setModalIsOpen(false);
+            getTasks();
         })
         .catch( error => console.log(error));
     }
@@ -293,7 +308,9 @@ export function Board () {
                                 Delete <img src={trash} alt="" />
                             </Button>
 
-                            <Button>
+                            <Button
+                                onClick={ handleUpdateTask }
+                            >
                                 Save <img src={save} alt="" />
                             </Button>
                         </ButtonsWrapper>

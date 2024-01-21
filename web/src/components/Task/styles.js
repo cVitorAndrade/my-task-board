@@ -68,12 +68,13 @@ export const Container = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        align-self: center;
     }
 
     .icon {
         background-color: ${ ({ theme }) => theme.COLORS.WHITE};
-        font-size: 2.2rem;
         align-self: flex-start;
+        font-size: 2.2rem;
     }
 
     .status {
