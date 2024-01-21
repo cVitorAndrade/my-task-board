@@ -37,18 +37,20 @@ import trash from "../../assets/Trash.svg";
 
 import { api } from "../../services/api";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-export function Board () {
+export function Board () {    
     const [tasks, setTasks] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const param = useParams();
+    const navigate = useNavigate();
 
     const [selectedTaskTitle, setSelectedTaskTitle] = useState("");
     const [selectedTaskDescription, setSelectedTaskDescription] = useState("");
     const [selectedTaskStatus, setSelectedTaskStatus] = useState("");
     const [selectedTaskIcon, setSelectedTaskIcon] = useState("");
     const [selectedTaskId, setSelectedTaskId] = useState("");
-
-    const [selectedTask, setSelectedTask] = useState({});
 
     const allIcons = [
         {
@@ -98,22 +100,23 @@ export function Board () {
         }
     ]
 
-
-    useEffect(() => {
-        getTasks();
-
-    }, [])
-
     function getTasks () {
-        api.get(`/task/2`).then( ({ data }) => {
+        api.get(`/task/${param.id}`).then( ({ data }) => {
             setTasks([...data.tasks]);
+            console.log(param.id);
             
         }).catch(error => console.log(error));
+    }
 
+    function createBoard () {
+        api.post("/board").then(({ data }) => {
+            navigate(`/board/${data.board_id}`);
+
+        }).catch( error => console.log(error));
     }
 
     function createNewTask () {
-        api.post("/task/2").then(() => {
+        api.post(`/task/${param.id}`).then(() => {
             getTasks();
         }).catch(error => console.log(error));
     }
@@ -127,6 +130,14 @@ export function Board () {
 
         setModalIsOpen(true);
     }
+
+    useEffect(() => {
+        if ( param.id ) {
+            getTasks();
+        } else {
+            createBoard();
+        }
+    }, [param]);
 
     return(
         <Container>
