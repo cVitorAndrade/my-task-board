@@ -103,7 +103,6 @@ export function Board () {
     function getTasks () {
         api.get(`/task/${param.id}`).then( ({ data }) => {
             setTasks([...data.tasks]);
-            console.log(param.id);
             
         }).catch(error => console.log(error));
     }
@@ -129,6 +128,16 @@ export function Board () {
         setSelectedTaskDescription(description)
 
         setModalIsOpen(true);
+    }
+
+    function handleDeleteTask () {
+        api.delete(`/task/${selectedTaskId}`)
+        .then( () => {
+            setModalIsOpen(false);
+            getTasks();
+
+        })
+        .catch( error => console.log(error));
     }
 
     useEffect(() => {
@@ -278,7 +287,9 @@ export function Board () {
                         </TaskStatus>
 
                         <ButtonsWrapper>
-                            <Button>
+                            <Button
+                                onClick={ handleDeleteTask }
+                            >
                                 Delete <img src={trash} alt="" />
                             </Button>
 
