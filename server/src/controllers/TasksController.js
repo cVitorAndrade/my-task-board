@@ -36,6 +36,26 @@ class TasksController {
             message: "Task deletada com sucesso"
         })
     }
+
+    async update (request, response) {
+        const { task_id } = request.params;
+        const { title, description, icon_name, status } = request.body;
+
+        await knex("tasks").where({ id: task_id }).update({
+            title,
+            description,
+            icon_name,
+            status
+        });
+
+        const task = await knex("tasks").where({ id: task_id })
+
+        return response.json({
+            status: "sucess",
+            message: "task atualizada com sucesso",
+            task
+        })
+    }
 }
 
 module.exports = TasksController;
