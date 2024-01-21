@@ -250,6 +250,7 @@ export function Board () {
                                         <Status 
                                             key={status.name}
                                             className={ selectedTaskStatus === status.value ? "selected" : "" }
+                                            onClick={ () => setSelectedTaskStatus(status.value) }
                                         >
                                             <div>
                                                 <StatusIcon 

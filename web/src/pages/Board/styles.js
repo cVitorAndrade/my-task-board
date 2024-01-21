@@ -290,6 +290,21 @@ export const Status = styled.div`
     
     border-radius: 1.4rem;
     
+    transition: background .2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+
+    &.selected {
+        border: 2px solid ${ ({ theme }) => theme.COLORS.BLUE_DARK};
+
+        &:hover {
+            filter: none;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+        filter: brightness(0.9);
+    }
+
     > svg {
         padding: 2px;
         background-color: ${ ({ theme }) => theme.COLORS.BLUE_DARK};
@@ -297,9 +312,6 @@ export const Status = styled.div`
         border-radius: 50%;
     }
 
-    &.selected {
-        border: 2px solid ${ ({ theme }) => theme.COLORS.BLUE_DARK};
-    }
     
     > div {
         display: flex;
