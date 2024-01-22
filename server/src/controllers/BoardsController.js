@@ -29,6 +29,13 @@ class BoardController {
                 icon_name: "cup",
                 board_id
             },
+            {
+                title: "Task To Do",
+                description: "Work on a Challenge on devChallenges.io, learn TypeScript",
+                status: "",
+                icon_name: "books",
+                board_id
+            },
         ]
 
         await knex("tasks").insert(defaultTasks);
