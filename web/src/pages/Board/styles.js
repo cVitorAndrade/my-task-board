@@ -80,7 +80,7 @@ export const Modal = styled.div`
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, .25);
-    overflow: hidden;
+    overflow: auto;
 
     display: flex;
     justify-content: end;
@@ -88,7 +88,7 @@ export const Modal = styled.div`
     padding: 1.2rem;
 
     &.none {
-        display: none !important;
+        display: none;
     }
 `;
 
@@ -103,6 +103,10 @@ export const TaskDetails = styled.div`
     border-radius: 1.6rem;
 
     padding: 2rem;
+
+    @media( max-width: 800px ) {
+        width: 100%;
+    }
 `;
 
 export const TaskHeader = styled.div`
@@ -231,6 +235,7 @@ export const TaskIcon = styled.div`
     > div {
         display: flex;
         gap: 1rem;
+        flex-wrap: wrap;
     }
 `;
 
@@ -275,6 +280,12 @@ export const TaskStatus = styled.div`
         font-weight: 500;
 
         color: ${ ({ theme }) => theme.COLORS.GRAY};
+    }
+
+    @media( max-width: 430px ) {
+        > div {
+            flex-direction: column;
+        }
     }
 `;
 
@@ -323,6 +334,10 @@ export const Status = styled.div`
             font-size: 1.5rem;
             color: ${ ({ theme }) => theme.COLORS.BLACK}
         }
+    }
+
+    @media( max-width: 430px ) {
+        width: 100%;
     }
 
 `;
@@ -388,5 +403,10 @@ export const Button = styled.button`
         cursor: pointer;
         filter: brightness(0.9);
     }
+
+    @media( max-width: 430px ) {
+        max-width: 50%;
+        padding: 1rem 2rem;
+    } 
 
 `;
