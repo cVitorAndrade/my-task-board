@@ -25,6 +25,8 @@ import edit from '../../assets/Edit_duotone.svg'
 import addTask from '../../assets/Add_round_duotone.svg'
 import close from "../../assets/close_ring_duotone-1.svg"
 
+import { IoMdClose } from "react-icons/io";
+import { FaSave } from "react-icons/fa";
 
 import inProgress from "../../assets/Time_atack_duotone.svg"
 import completed from "../../assets/Done_round_duotone.svg"
@@ -51,6 +53,13 @@ export function Board () {
     const [selectedTaskStatus, setSelectedTaskStatus] = useState("");
     const [selectedTaskIcon, setSelectedTaskIcon] = useState("");
     const [selectedTaskId, setSelectedTaskId] = useState("");
+
+    const [updateBoard, setUpdateBoard] = useState(false);
+    const [newBoardTitle, setNewBoardTitle] = useState("");
+    const [newBoardDescription, setNewBoardDescription] = useState("");
+
+    const [boardTitle, setBoardTitle] = useState("");
+    const [boardDescription , setBoardDescription] = useState("");
 
     const allIcons = [
         {
@@ -162,6 +171,13 @@ export function Board () {
 
     function handleGetBoard () {
         if ( param.id && Number.isInteger(Number(param.id)) ) {
+            api.get(`/board/${param.id}`)
+            .then( ({ data }) => {
+                setBoardDescription(data.board.description);
+                setBoardTitle(data.board.title);
+            })
+            .catch( error => console.log(error));
+
             getTasks();
             return;
         }
@@ -173,6 +189,24 @@ export function Board () {
         createBoard();
     }
 
+    function handleUpdateBoard () {
+        api.put(`/board/${param.id}`, {
+            title: newBoardTitle, 
+            description: newBoardDescription
+        })
+        .then(() => {
+            handleGetBoard();
+            cleanBoardUpdateScreen() ;
+        })
+        .catch( error => console.log(error));
+    }
+
+    function cleanBoardUpdateScreen () {
+        setUpdateBoard(false);
+        setNewBoardDescription("");
+        setNewBoardTitle("");
+    }
+
     useEffect(() => {
         handleGetBoard();
     }, [param]);
@@ -182,12 +216,42 @@ export function Board () {
             <Content>
                 <Header>
                     <img src={logo} alt="" />
-                    <div className="title">
+                    <div className={`title ${ updateBoard ? "none" : ""}`}>
                         <h1>
-                            My Task Board
-                            <img src={edit} alt="" />
+                            { boardTitle }
+                            <img src={edit} alt="" onClick={ () => setUpdateBoard(true) } />
                         </h1>
-                        <p>Tasks to keep organised</p>
+                        <p> { boardDescription } </p>
+                    </div>
+
+                    <div className={`update-title ${ updateBoard ? "" : "none" }`}>
+                        <div className="inputs">
+                            <input 
+                                type="text"
+                                value={ newBoardTitle }
+                                placeholder="New Title"
+                                onChange={ e => setNewBoardTitle(e.target.value) }
+                            />
+
+                            <input 
+                                type="text" 
+                                value={ newBoardDescription}
+                                placeholder="New Description"
+                                onChange={ e => setNewBoardDescription(e.target.value) }
+                            />
+                        </div>
+
+                        <div className="buttons">
+                            <IoMdClose 
+                                size={20}
+                                onClick={ cleanBoardUpdateScreen }
+                            />
+
+                            <FaSave 
+                                size={20}
+                                onClick={ handleUpdateBoard }
+                            />
+                        </div>
                     </div>
                 </Header>
 
@@ -217,7 +281,7 @@ export function Board () {
                 </NewTask>
 
                 <Modal className={ modalIsOpen ? "" : "none" }>
-                    <TaskDetails>
+                    <TaskDetails >
                         <TaskHeader>
                             <h3>Task details</h3>
                             <button
@@ -335,5 +399,3 @@ export function Board () {
         </Container>
     )
 }
-
-

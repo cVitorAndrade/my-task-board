@@ -17,19 +17,76 @@ export const Header = styled.header`
     gap: 1.2rem;
     padding: 4rem 0;
 
-    
+
     .title {
         h1 {
             font-size: 4rem;
             font-weight: 400;
             margin-bottom: 1rem;
+            display: flex;
 
             img {
                 margin-left: 1.2rem;
+                transition: background .2s cubic-bezier(0.55, 0.055, 0.675, 0.19);                
+                border-radius: .5rem;
+                
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                    cursor: pointer;
+                }
             }
         }
     }
 
+    .update-title {
+        display: flex;
+        width: 100%;
+        
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+
+            width: 100%;
+
+            input {
+                padding: 1.2rem;
+                border: none;
+                border-bottom: 1px solid  ${ ({ theme }) => theme.COLORS.BLACK};
+                outline: none;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.2rem;
+            padding: 2rem 2rem 0;
+
+            svg:first-child {
+                color: ${ ({ theme }) => theme.COLORS.RED_DARK};
+            }
+            
+            svg:last-child {
+                color: ${ ({ theme }) => theme.COLORS.GREEN_DARK};
+            }
+
+            svg {
+                &:hover {
+                    cursor: pointer;
+                    filter: brightness(0.9);
+                }
+            }
+
+        }
+
+    }
+
+    .none {
+        display: none;
+    }
+    
 `;
 
 export const TaskWrrapper = styled.div`

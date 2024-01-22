@@ -58,6 +58,7 @@ export const Container = styled.div`
             font-weight: 300;
             color: ${ ({ theme }) => theme.COLORS.BLACK};
             max-width: 80%;
+            word-break: break-all;
         }
     }
 
