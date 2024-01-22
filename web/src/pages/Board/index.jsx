@@ -102,7 +102,12 @@ export function Board () {
 
     function getTasks () {
         api.get(`/task/${param.id}`).then( ({ data }) => {
-            setTasks([...data.tasks]);
+            if ( data.tasks.length > 0 ) {
+                setTasks([...data.tasks]);
+                return;
+            }
+
+            navigate("/not-found");
             
         }).catch(error => console.log(error));
     }
@@ -155,12 +160,21 @@ export function Board () {
         .catch( error => console.log(error));
     }
 
-    useEffect(() => {
-        if ( param.id ) {
+    function handleGetBoard () {
+        if ( param.id && Number.isInteger(Number(param.id)) ) {
             getTasks();
-        } else {
-            createBoard();
+            return;
         }
+        if ( param.id ) {
+            navigate("/")
+            return;
+        }
+
+        createBoard();
+    }
+
+    useEffect(() => {
+        handleGetBoard();
     }, [param]);
 
     return(
